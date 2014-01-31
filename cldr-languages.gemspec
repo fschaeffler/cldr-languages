@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "cldr-languages"
   spec.version       = Cldr::Languages::VERSION
   spec.authors       = ["Florian Schäffler"]
-  spec.email         = ["github@schf.de"]
+  spec.email         = ["ruby@schf.de"]
   spec.summary       = %q{Localization of languages to a given language or its own language}
   spec.description   = %q{Use language code 'zzx' for getting languages in its own language}
   spec.homepage      = "http://www.schf.de"
