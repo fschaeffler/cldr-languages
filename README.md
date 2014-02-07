@@ -1,5 +1,10 @@
 cdlr-languages
 ==============
+Status
+------
+https://travis-ci.org/fschaeffler/cldr-languages
+[![Build Status](https://secure.travis-ci.org/fschaeffler/cldr-languages.png)](http://travis-ci.org/fschaeffler/cldr-languages)
+
 Installation
 ------------
 gem install cldr-languages
