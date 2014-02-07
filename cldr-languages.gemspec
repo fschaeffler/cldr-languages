@@ -23,4 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'cldr', '~> 0.1'
   spec.add_development_dependency 'i18n', '~> 0.6'
   spec.add_development_dependency 'locale', '~> 2.1'
+  spec.add_development_dependency 'rspec', '~> 0.9'
 end
