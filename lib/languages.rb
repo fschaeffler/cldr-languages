@@ -9,14 +9,16 @@ module Cldr
     DEFAULT_LANGUAGE_CODE = 'en'
     DEFAULT_SELF_LOCALIZATION_CODE = 'zxx'
 
-    def import
+    def import(opts = {})
       language_codes = language_codes(true)
 
-      if !File.directory?('config')
-        FileUtils.mkdir_p('config')
-        FileUtils.mkdir_p('config/locales')
-      elsif !File.directory?('config/locales')
-        FileUtils.mkdir_p('config/locales')
+      root_folder = opts[:root_folder] ? opts[:root_folder] : '';
+
+      if !File.directory?(root_folder + 'config')
+        FileUtils.mkdir_p(root_folder + 'config')
+        FileUtils.mkdir_p(root_folder + 'config/locales')
+      elsif !File.directory?(root_folder + 'config/locales')
+        FileUtils.mkdir_p(root_folder + 'config/locales')
       end
 
       language_codes.each do |languageCode|
@@ -25,7 +27,7 @@ module Cldr
         localized_languages_content[languageCode] = localized_languages
         yaml_content = localized_languages_content.to_yaml
 
-        File.open("config/locales/languages.#{languageCode}.yml", 'w') do |f|
+        File.open(root_folder + "config/locales/languages.#{languageCode}.yml", 'w') do |f|
           f.write(yaml_content)
         end
       end
