@@ -10,7 +10,7 @@ module Cldr
     DEFAULT_SELF_LOCALIZATION_CODE = 'zxx'
 
     def import
-      languageCodes = language_codes(true)
+      language_codes = language_codes(true)
 
       if !File.directory?('config')
         FileUtils.mkdir_p('config')
@@ -19,55 +19,55 @@ module Cldr
         FileUtils.mkdir_p('config/locales')
       end
 
-      languageCodes.each do |languageCode|
-        localizedLanguages = localized_languages(language: languageCode)
-        localizedLanguagesContent = Hash.new
-        localizedLanguagesContent[languageCode] = localizedLanguages
-        yamlContent = localizedLanguagesContent.to_yaml
+      language_codes.each do |languageCode|
+        localized_languages = localized_languages(language: languageCode)
+        localized_languages_content = Hash.new
+        localized_languages_content[languageCode] = localized_languages
+        yaml_content = localized_languages_content.to_yaml
 
         File.open("config/locales/languages.#{languageCode}.yml", 'w') do |f|
-          f.write(yamlContent)
+          f.write(yaml_content)
         end
       end
     end
 
-    def language_codes(includeSelfLocalization = false)
-      defaultLanguage = language(DEFAULT_LANGUAGE_CODE)
-      defaultLanguageObject = CLDR::Object.new(locale: defaultLanguage)
+    def language_codes(self_localization = false)
+      default_language = language(DEFAULT_LANGUAGE_CODE)
+      default_language_object = CLDR::Object.new(locale: default_language)
 
-      languageCodes = defaultLanguageObject.core.languages.keys
+      language_codes = default_language_object.core.languages.keys
 
-      if includeSelfLocalization then
-        return languageCodes
+      if self_localization
+        language_codes
       else
-        return languageCodes.reject! { |k| k == DEFAULT_SELF_LOCALIZATION_CODE }
+        language_codes.reject! { |k| k == DEFAULT_SELF_LOCALIZATION_CODE }
       end
     end
 
     def localized_languages(opts = {})
-      localizationLanguage = language(opts[:language])
-      fallbackLanguage = language(opts[:fallback])
+      localization_language = language(opts[:language])
+      fallback_language = language(opts[:fallback])
 
-      if opts[:language] && opts[:language].to_s == DEFAULT_SELF_LOCALIZATION_CODE then
-        languageCodes = language_codes
+      if opts[:language] && opts[:language].to_s == DEFAULT_SELF_LOCALIZATION_CODE
+        all_language_codes = language_codes
 
-        return Hash[languageCodes.map { |languageCode|
-          languageFromCode = Locale::Tag::Cldr.new(languageCode)
-          localizedLanguageObject = CLDR::Object.new(locale: languageFromCode, fallback: fallbackLanguage)
+        Hash[all_language_codes.map { |languageCode|
+          language_from_code = Locale::Tag::Cldr.new(languageCode)
+          localized_language_object = CLDR::Object.new(locale: language_from_code, fallback: fallback_language)
 
-          [languageCode, localizedLanguageObject.core.languages[languageCode]]
+          [languageCode, localized_language_object.core.languages[languageCode]]
         }]
       else
-        localizationLanguageObject = CLDR::Object.new(locale: localizationLanguage, fallback: fallbackLanguage)
-        return localizationLanguageObject.core.languages
+        localization_language_object = CLDR::Object.new(locale: localization_language, fallback: fallback_language)
+        localization_language_object.core.languages
       end
     end
 
     private
 
-    def language(languageString)
-      defaultLanguageString = languageString ? languageString : DEFAULT_LANGUAGE_CODE
-      return Locale::Tag::Cldr.new(defaultLanguageString)
+    def language(language_string)
+      default_language_string = language_string ? language_string : DEFAULT_LANGUAGE_CODE
+      Locale::Tag::Cldr.new(default_language_string)
     end
 
   end

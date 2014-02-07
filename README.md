@@ -26,6 +26,10 @@ Usage
     # retrieves a hash of available language codes and language name in German with fallback French
     localized_languages(language: 'de', :fallback 'fr')
 
+
+    # please be aware that a call with 'zxx' as language parameter is very expensive. perhaps it's better to import
+    # this localization and use the cached version.
+
     # retrieves a hash of available language codes and language name localized to the language code with fallback English
     localized_languages(language: 'zxx')
 
