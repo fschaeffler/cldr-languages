@@ -6,3 +6,7 @@ gemspec
 gem 'cldr'
 gem 'rake'
 gem 'i18n'
+
+group :test do
+  gem 'rake'
+end
